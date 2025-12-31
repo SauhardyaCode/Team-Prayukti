@@ -5,11 +5,12 @@ import pass_icon from "../assets/password.png"
 import phone_icon from "../assets/telephone.png"
 import addr_icon from "../assets/locations.png"
 import { useState } from "react"
+import useBodyClass from "./useBodyClass"
 
 function LoginPage() {
+    useBodyClass("body-login")
 
     const [action, setAction] = useState("Login");
-
     return (
         <>
             <div className="container">
@@ -42,7 +43,7 @@ function LoginPage() {
                             <div className="forgot-password">Forgot Password? <span>Click Here!</span></div>
                         </>
                         : <>
-                            <table>
+                            <table className="signup-table">
                                 <tr>
                                     <td>
                                         <div className="input input-small">
@@ -72,16 +73,20 @@ function LoginPage() {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <div className="input input-big">
-                                        <img src={addr_icon} alt="" width="26px" />
-                                        <input type="text" placeholder="Address Line 1" />
-                                    </div>
+                                    <td>
+                                        <div className="input input-big">
+                                            <img src={addr_icon} alt="" width="26px" />
+                                            <input type="text" placeholder="Address Line 1" />
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <div className="input input-big">
-                                        <img src={addr_icon} alt="" width="26px" />
-                                        <input type="text" placeholder="Address Line 2" />
-                                    </div>
+                                    <td>
+                                        <div className="input input-big">
+                                            <img src={addr_icon} alt="" width="26px" />
+                                            <input type="text" placeholder="Address Line 2" />
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>

@@ -1,0 +1,214 @@
+.body-home {
+    overflow-x: hidden;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 20%, #02307a 0%, transparent 40%),
+        radial-gradient(circle at 80% 10%, #0f4336 0%, transparent 35%),
+        radial-gradient(circle at 50% 80%, #07434d 0%, transparent 40%),
+        linear-gradient(135deg, #000000, #03166c);
+}
+
+nav {
+    background: linear-gradient(90deg, rgb(5, 36, 68) 0%, rgb(57, 60, 67) 100%, rgb(5, 121, 245) 100%, rgb(58, 58, 58) 100%);
+}
+
+.red-alert {
+    position: relative;
+    color: #45cb2abc;
+    font-size: 2.5em;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.red-alert::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    color: #00ff33ba;
+    filter: blur(18px);
+    opacity: 0.8;
+    z-index: -1;
+}
+
+@keyframes alertPulse {
+    0% {
+        text-shadow: 0 0 10px #0b3d06;
+    }
+
+    50% {
+        text-shadow: 0 0 50px #087124;
+    }
+
+    100% {
+        text-shadow: 0 0 10px #03ad30c5;
+    }
+}
+
+.red-alert {
+    animation: alertPulse 1.2s infinite ease-in-out;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    /* Default for desktop */
+    gap: 40px;
+    padding: 20px;
+    flex-wrap: wrap;
+    /* Allows wrapping */
+}
+
+/* Ensure the map takes full width on mobile */
+#map-container {
+    flex: 1 1 500px;
+    /* Grow, shrink, base width */
+    width: 100%;
+    /* Slightly shorter for mobile */
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid #222;
+    background: #0b0b0b;
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.5),
+        inset 0 0 0 1px rgba(103, 125, 50, 0.08);
+}
+
+/* Ensure the status panel scales properly */
+#status-panel {
+    flex: 1 1 300px;
+    width: 100%;
+    font-size: 1.2em;
+    background: #374561;
+    border-radius: 14px;
+    padding: 15px;
+    /* box-sizing: border-box; */
+    box-shadow: 0 8px 25px rgba(134, 125, 26, 0.5);
+}
+
+#status-panel table {
+    width: 100%;
+}
+
+#status-panel tr {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 20px;
+    column-gap: 20px;
+}
+
+#follow-apps {
+    gap: 10px;
+}
+
+/* Mobile Specific Tweaks */
+@media (max-width: 768px) {
+    .longer-heading {
+        display: none;
+    }
+
+    .dashboard {
+        flex-direction: column;
+        /* Stacks Map on top of Status */
+        padding: 10px;
+    }
+
+    .red-alert {
+        font-size: 1.8em;
+        /* Smaller title for mobile */
+        letter-spacing: 2px;
+    }
+
+    #map-container {
+        height: 300px;
+        /* Smaller map for phones */
+    }
+
+    .site-footer {
+        padding: 1.5rem;
+        /* text-align: center; */
+    }
+
+    #follow-apps {
+        justify-content: center;
+        display: flex;
+        margin-top: 15px;
+    }
+}
+
+.site-footer {
+    background: #313030;
+    color: #aaa;
+    padding: 3rem;
+    border-top: 10px solid #3a3a44;
+    margin-top: 40px;
+}
+
+.user-logo {
+    margin-top: -0.13em;
+}
+
+.user-logo img {
+    height: 2em;
+    margin-right: 0.3em;
+}
+
+
+/* */
+.alert-heading {
+    text-align: center;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.red-alert.danger {
+    color: #ff1a1a;
+    text-shadow:
+        0 0 10px #ff1a1a,
+        0 0 30px #ff0000,
+        0 0 60px #b30000;
+    animation: pulseGlow 1s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.03);
+    }
+}
+
+.danger-banner {
+    margin: 15px auto;
+    padding: 12px;
+    width: 90%;
+    text-align: center;
+    background: linear-gradient(90deg, #8b0000, #ff0000, #8b0000);
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    box-shadow: 0 0 20px red;
+    animation: bannerBlink 0.8s infinite alternate;
+}
+
+@keyframes bannerBlink {
+    from {
+        opacity: 0.7
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+.enable-btn{
+    font-size: 0.7em;
+    margin-top: 1em;
+    margin-left: 1em;
+}
