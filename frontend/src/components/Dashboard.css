@@ -1,4 +1,4 @@
-.body-home {
+.body-dashboard {
     overflow-x: hidden;
     min-height: 100vh;
     background:
@@ -147,7 +147,8 @@ nav {
 }
 
 .user-logo {
-    margin-top: -0.13em;
+    margin-top: -0.11em;
+    margin-right: 0.4em;
 }
 
 .user-logo img {

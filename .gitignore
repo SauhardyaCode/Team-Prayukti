@@ -1,1 +1,4 @@
 .vite
+.env
+firebase_service_account.json
+app-past.py
