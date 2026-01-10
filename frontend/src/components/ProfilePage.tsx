@@ -34,7 +34,7 @@ function ProfilePage() {
     useEffect(() => {
         async function loadProfile() {
             try {
-                const res = await apiFetch("/profile", { method: "GET" });
+                const res = await apiFetch("https://team-prayukti.onrender.com/profile", { method: "GET" });
                 if (!res.ok) return;
 
                 const data = await res.json();
@@ -86,7 +86,7 @@ function ProfilePage() {
         setMessage("");
 
         try {
-            const res = await apiFetch("/profile", {
+            const res = await apiFetch("https://team-prayukti.onrender.com/profile", {
                 method: "POST",
                 body: JSON.stringify(form),
             });

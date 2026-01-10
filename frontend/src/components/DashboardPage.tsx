@@ -137,7 +137,7 @@ function DashboardPage() {
     useEffect(() => {
         async function loadDashboard() {
             try {
-                const response = await apiFetch("/dashboard", {
+                const response = await apiFetch("https://team-prayukti.onrender.com/dashboard", {
                     method: "GET",
                 });
 

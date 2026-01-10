@@ -36,7 +36,7 @@ function LoginPage() {
             if (!token) return;
 
             try {
-                const res = await apiFetch("/auth/check", {
+                const res = await apiFetch("https://team-prayukti.onrender.com/auth/check", {
                     method: "GET",
                 });
 
@@ -60,7 +60,7 @@ function LoginPage() {
         e.preventDefault();
 
         try {
-            const response = await fetch(`http://${window.location.hostname}:5000/get/login`, {
+            const response = await fetch(`https://team-prayukti.onrender.com/get/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
