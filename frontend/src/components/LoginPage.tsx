@@ -247,10 +247,10 @@ function LoginPage() {
                                 </table>
                             </>}
                     </div>
-                    <button type="submit" className="btn btn-secondary submit-btn signup-btn">Submit</button><br /><br />
+                    {/* <button type="submit" className="btn btn-secondary submit-btn signup-btn">Submit</button><br /><br /> */}
                     <div className="submit-container">
-                        <div className={action === "Login" ? "submit gray" : "submit"} onClick={() => { setAction("Sign Up") }}>Sign Up</div>
-                        <div className={action === "Sign Up" ? "submit gray" : "submit"} onClick={() => { setAction("Login") }}>Login</div>
+                        <div className={action === "Login" ? "submit gray" : "submit"} onClick={() => { setAction("Sign Up") }}><button className={action === "Login" ? "transparent-bg gray" : "transparent-bg white"} type={action === "Sign Up"?"submit":"button"}>Sign Up</button></div>
+                        <div className={action === "Sign Up" ? "submit gray" : "submit"} onClick={() => { setAction("Login") }}><button className={action === "Sign Up" ? "transparent-bg gray" : "transparent-bg white"} type={action === "Login"?"submit":"button"}>Login</button></div>
                     </div>
                 </form>
             </div>

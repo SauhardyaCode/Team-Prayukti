@@ -191,3 +191,13 @@
         width: 80vw;
     }
 }
+
+.transparent-bg{
+    background: transparent;
+    border: 0;
+    font-weight: 600;
+}
+
+.white{
+    color: #ffffff;
+}

@@ -1,6 +1,6 @@
 import math
 import random
-
+import re
 
 class PasswordHasher():
     def __init__(self):
@@ -75,3 +75,8 @@ class PasswordHasher():
             leftout = self.set_hash(leftout)
 
         return f"${self.check}${final}"
+    
+    def check_hash(self, password_entered, hash_saved):
+        code = int(re.findall('\$(\d+)\$', hash_saved)[0])
+        hash_generated = self.get_hash(password_entered, code)
+        return (hash_generated==hash_saved)

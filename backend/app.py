@@ -1,46 +1,4 @@
-import eventlet
-eventlet.monkey_patch()
-
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timedelta
-import threading
-import password_hasher as ph
-from dotenv import load_dotenv
-import os, re
-import jwt
-from functools import wraps
-import firebase_admin
-from firebase_admin import credentials, db as firebase_db
-from flask_jwt_extended import jwt_required, get_jwt_identity
-
-cred = credentials.Certificate("firebase_service_account.json")
-firebase_admin.initialize_app(cred, {
-    "databaseURL": "https://prayukti-ee020-default-rtdb.firebaseio.com/"
-})
-
-load_dotenv()
-SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
-REACT_BASE_URL = "http://localhost:5173"
-
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_NAME = os.getenv("DB_NAME")
-
-app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY")
-CORS(
-    app,
-    origins=[REACT_BASE_URL],
-    allow_headers=["Content-Type", "Authorization"],
-    supports_credentials=True
-)
-hasher = ph.PasswordHasher()
-app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+from models import *
 
 def generate_jwt(user_id):
     payload = {
@@ -71,45 +29,8 @@ def jwt_required(f):
         return f(*args, **kwargs)
     return decorated
 
-# Database Table Models
-class UserSignup(db.Model):
-    __tablename__ = "user_signup"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    first_name = db.Column(db.String(100), nullable=False)
-    last_name = db.Column(db.String(100))
-    phone = db.Column(db.String(20), nullable=False, unique=True)
-    email = db.Column(db.String(150), nullable=False, unique=True)
-    address = db.Column(db.String(1000), nullable=False)
-    district = db.Column(db.String(50), nullable=False)
-    state = db.Column(db.String(50), nullable=False)
-    police_station = db.Column(db.String(100), nullable=True)
-    pincode = db.Column(db.String(10), nullable=False)
-    password_hash = db.Column(db.String(200), nullable=False)
-    signup_date = db.Column(db.DateTime, default=datetime.now())
-
-class UserProfile(db.Model):
-    __tablename__ = "user_profile"
-    user_id = db.Column(db.Integer, db.ForeignKey("user_signup.id", ondelete="CASCADE"), primary_key=True)
-    bio = db.Column(db.String(500), nullable=True)
-    dob = db.Column(db.Date, nullable=True)
-    blood_group = db.Column(db.String(5), nullable=True)
-    medical_notes = db.Column(db.String(500), nullable=True)
-    photo_url = db.Column(db.String(200), nullable=True)
-    preferred_language = db.Column(db.String(50), nullable=True)
-    profile_completed = db.Column(db.Boolean, default=False)
-    last_updated = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
-
-    # Relationship to parent
-    user = db.relationship("UserSignup", backref=db.backref("profile", uselist=False, cascade="all, delete"))
-
-class EmergencyContact(db.Model):
-    __tablename__ = "emergency_contacts"
-    phone_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user_signup.id", ondelete="CASCADE"), nullable=False)
-    phone = db.Column(db.String(20), nullable=False)
-
-    # Relationship to parent
-    user = db.relationship("UserSignup", backref=db.backref("emergency_contacts", cascade="all, delete-orphan"))
+def find_nearest_police_stations(latitude, longitude, radius):
+    pass
 
 
 @app.route('/get/login', methods=['GET', 'POST'])
@@ -131,12 +52,11 @@ def login():
             UserSignup.id,
             UserSignup.password_hash
         ).filter_by(email=login_email).first()
-        code = int(re.findall('\$(\d+)\$', user.password_hash)[0])
 
         if not user:
             return jsonify({"success": False, "message": "Invalid email or password"}), 401
 
-        if user.password_hash != hasher.get_hash(login_password, code):
+        if not hasher.check_hash(login_password, user.password_hash):
             return jsonify({"success": False, "message": "Invalid email or password"}), 401
         else:
             token = generate_jwt(user.id)
