@@ -14,8 +14,9 @@ from functools import wraps
 import firebase_admin
 from firebase_admin import credentials, db as firebase_db
 from flask_jwt_extended import jwt_required, get_jwt_identity
+import json
 
-cred = credentials.Certificate("firebase_service_account.json")
+cred = credentials.Certificate(json.loads(os.environ("FIREBASE_SERVICE_ACCOUNT")))
 firebase_admin.initialize_app(cred, {
     "databaseURL": "https://prayukti-ee020-default-rtdb.firebaseio.com/"
 })
