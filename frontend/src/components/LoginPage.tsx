@@ -45,6 +45,7 @@ function LoginPage() {
                 }
             } catch {
                 console.warn("Invalid User Token");
+                localStorage.removeItem("token")
             }
         }
 

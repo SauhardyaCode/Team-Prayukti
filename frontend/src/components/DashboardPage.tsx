@@ -253,7 +253,7 @@ function DashboardPage() {
                                 <a className="nav-link" href="/feed/about">About Us</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/login" onClick={()=>{localStorage.clear()}}>Log Out</a>
+                                <a className="nav-link" href="/login" onClick={()=>{localStorage.removeItem("token")}}>Log Out</a>
                             </li>
                         </ul>
                     </div>
